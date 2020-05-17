@@ -1,21 +1,13 @@
-/*
- *
- *  This file is part of MUMPS 5.2.1, released
- *  on Fri Jun 14 14:46:05 UTC 2019
- *
- */
-/* Example program using the C interface to the 
- * double real arithmetic version of MUMPS, dmumps_c.
- * We solve the system A x = RHS with
- *   A = diag(1 2) and RHS = [1 4]^T
- * Solution is [1 2]^T */
+// Define A and rhs for
+// -u'' = 1; u(0) = u(1) = 0
+//  tridiag matrix A = [-1 2 -1] 
+//  RHS^T = (1,1,1, ... ,1) * h**2
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
 #include <vector>
-//#include "mpi.h"
 #include "dmumps_c.h"
 #define JOB_INIT -1
 #define JOB_END -2
@@ -46,9 +38,6 @@ int main(int argc, char ** argv)
 #endif
   DMUMPS_STRUC_C id;
 
-  /* Define A and rhs */
-  // -u'' = 1; u(0) = u(1) = 0
-  // tridiag matrix [-1 2 -1] 
 
   MUMPS_INT n = 90001;
   MUMPS_INT8 nnz = 3 * n - 2;
@@ -90,8 +79,6 @@ int main(int argc, char ** argv)
   argv = &name;
 #endif
 
-  /* Initialize a MUMPS instance. Use MPI_COMM_WORLD */
-//  id.comm_fortran=USE_COMM_WORLD;
   id.par=1; id.sym=0;
   id.job=JOB_INIT;
   dmumps_c(&id);
